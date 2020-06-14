@@ -4,22 +4,28 @@ plugins {
     id "application"
 }
 
-
-
 version "0.1"
-group "mybooks.perf.micronaut.async"
+group "com.dburyak.mybooks.perf.micronaut.async"
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
+    mavenLocal()
+    jcenter()
     mavenCentral()
-    maven { url "https://jcenter.bintray.com" }
 }
 
 configurations {
     // for dependencies that are needed for development only
-    developmentOnly 
+    developmentOnly
 }
 
 dependencies {
+    // define lombok before micronaut DI processors
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
     annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
@@ -27,17 +33,21 @@ dependencies {
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation "io.micronaut:micronaut-inject"
     implementation "io.micronaut:micronaut-validation"
+    implementation "io.micronaut.configuration:micronaut-hibernate-validator"
     implementation "io.micronaut:micronaut-runtime"
     implementation "io.swagger.core.v3:swagger-annotations"
     implementation "io.micronaut:micronaut-security-jwt"
     implementation "io.micronaut:micronaut-http-client"
     implementation "io.micronaut.configuration:micronaut-mongo-reactive"
-    implementation "org.apache.logging.log4j:log4j-core:2.12.1"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+    implementation "com.lmax:disruptor:${disruptorVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
     implementation "io.micronaut:micronaut-http-server-netty"
     implementation "io.micronaut:micronaut-management"
     implementation "javax.annotation:javax.annotation-api"
-    runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
-    runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:2.12.1"
+    runtimeOnly "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+    runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:${log4jVersion}"
     testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
@@ -49,12 +59,13 @@ dependencies {
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "mybooks.perf.micronaut.async.Application"
+mainClassName = "com.dburyak.mybooks.perf.micronaut.async.Application"
+
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
 }
-tasks.withType(JavaCompile){
+tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
 }

@@ -2,6 +2,12 @@
 micronaut:
   application:
     name: mybooks-perf-micronaut-async
+  server:
+    port: 10999
+  executors:
+    io:
+      type: fixed
+      nThreads: 200
 
 ---
 micronaut:
