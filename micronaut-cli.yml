@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: mybooks.perf.micronaut.async
+---
+testFramework: junit
+sourceLanguage: java
