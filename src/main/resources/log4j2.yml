@@ -23,7 +23,7 @@ Configuration:
             "
   Loggers:
     Root:
-      level: warn
+      level: info
       AppenderRef:
         ref: CONSOLE
     logger:
@@ -32,3 +32,5 @@ Configuration:
         AppenderRef:
           ref: CONSOLE
         level: debug
+      - name: org.mongodb.driver
+        level: warn

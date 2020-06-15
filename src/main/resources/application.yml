@@ -15,16 +15,25 @@ micronaut:
     enabled: true
     endpoints:
       login:
-        enabled: true
+        enabled: false
       oauth:
-        enabled: true
+        enabled: false
+      logout:
+        enabled: false
+      keys:
+        enabled: false
     token:
+      enabled: true
+      roles-name: "roles"
       jwt:
         enabled: true
         signatures:
           secret:
-            generator:
-              secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
+            validator:
+              secret: "93dzoUj8MXzhFaQQn4Vrz1vnGUdVw175GXKMar2E3EUPj8BLJ_rbNWlGCI-bTcYmcVf_Z_d43H5CtOh0ZNA_RqokT61rqYsO7V8wf8fNhABEnooKpA0dJhWt_S7ctGPSMJPvh9DnYGg9PQuL1G8TmJFkvgzRyYFXJZQFzSdccmM"
+              jws-algorithm: HS256
+        bearer:
+          enabled: true
 
 ---
 mongodb:
